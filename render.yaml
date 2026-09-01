@@ -18,8 +18,7 @@ services:
       - key: APP_VERSION
         value: "3.0.0"
       - key: APP_URL
-        # Set this after first deploy — use your *.onrender.com URL
-        sync: false
+        value: "https://hazina-asili.onrender.com/"
       - key: APP_ENV
         value: production
       - key: APP_DEBUG
