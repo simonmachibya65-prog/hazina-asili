@@ -30,15 +30,15 @@ services:
       # ----- Database (TiDB Serverless) -----
       # Fill these from TiDB Cloud console → Connect → PHP/MySQL tab
       - key: DB_HOST
-        sync: false   # e.g. gateway01.eu-central-1.prod.aws.tidbcloud.com
+        value: "gateway01.eu-central-1.prod.aws.tidbcloud.com"
       - key: DB_PORT
-        sync: false   # e.g. 4000
+        value: "4000"
       - key: DB_USER
-        sync: false   # e.g. 2FHqXXXXXX.root
+        value: "24cavmxfc9wVuEi.root"
       - key: DB_PASS
-        sync: false
+        value: "kKqB7nx3pDMSrSX7"
       - key: DB_NAME
-        sync: false   # e.g. hazina_asili
+        value: "hazina_asili"
       - key: DB_CHARSET
         value: "utf8mb4"
       - key: DB_SSL
