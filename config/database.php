@@ -28,15 +28,18 @@ class Database {
         // Enable SSL for cloud databases (TiDB Serverless requires SSL)
         if (DB_SSL) {
             $options[PDO::MYSQL_ATTR_SSL_VERIFY_SERVER_CERT] = false;
-            // TiDB uses server-side SSL — no client cert needed
-            $options[PDO::MYSQL_ATTR_SSL_CA]                 = '';
+            // TiDB Cloud uses TLS — no CA cert file needed, just enable SSL
+            $options[PDO::MYSQL_ATTR_SSL_CIPHER] = 'DHE-RSA-AES256-SHA:AES128-SHA';
         }
 
         try {
             $this->connection = new PDO($dsn, DB_USER, DB_PASS, $options);
         } catch (PDOException $e) {
-            error_log("Database connection failed: " . $e->getMessage());
-            die('<div style="font-family:sans-serif;padding:2rem;color:#842029;background:#f8d7da;border-radius:8px;margin:2rem"><h2>Database Error</h2><p>Could not connect to the database. Please check your configuration.</p></div>');
+            $msg = $e->getMessage();
+            error_log("Database connection failed: " . $msg);
+            // Show detailed error only in debug mode
+            $detail = defined('APP_DEBUG') && APP_DEBUG ? '<br><small>' . htmlspecialchars($msg) . '</small>' : '';
+            die('<div style="font-family:sans-serif;padding:2rem;color:#842029;background:#f8d7da;border-radius:8px;margin:2rem"><h2>Database Error</h2><p>Could not connect to the database. Please check your configuration.' . $detail . '</p></div>');
         }
     }
 
