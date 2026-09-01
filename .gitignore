@@ -1,0 +1,13 @@
+.env
+vendor/
+assets/uploads/avatars/*
+assets/uploads/compounds/*
+assets/uploads/organisms/*
+assets/uploads/passports/*
+!assets/uploads/avatars/.gitkeep
+!assets/uploads/compounds/.gitkeep
+!assets/uploads/organisms/.gitkeep
+!assets/uploads/passports/.gitkeep
+*.log
+.DS_Store
+Thumbs.db

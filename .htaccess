@@ -1,0 +1,52 @@
+Options -Indexes
+ServerSignature Off
+
+# Prevent direct access to config, model, and helper files
+<FilesMatch "\.(php)$">
+    <If "%{REQUEST_URI} =~ m#/(config|models|helpers)/#">
+        Require all denied
+    </If>
+</FilesMatch>
+
+# Allow API controller direct access
+<Files "ApiController.php">
+    Require all granted
+</Files>
+
+# Security headers
+<IfModule mod_headers.c>
+    Header always set X-Content-Type-Options "nosniff"
+    Header always set X-Frame-Options "SAMEORIGIN"
+    Header always set X-XSS-Protection "1; mode=block"
+    Header always set Referrer-Policy "strict-origin-when-cross-origin"
+    Header always set Permissions-Policy "camera=(), microphone=(), geolocation=()"
+    Header always set Content-Security-Policy "default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; font-src 'self' https://cdn.jsdelivr.net; img-src 'self' data: blob:; connect-src 'self'"
+    Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains" env=HTTPS
+</IfModule>
+
+# Prevent access to sensitive files
+<FilesMatch "(\.env|\.git|composer\.json|composer\.lock|phpunit\.xml|\.env\.example)">
+    Require all denied
+</FilesMatch>
+
+# Block access to uploads directory PHP execution
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteRule ^assets/uploads/.*\.php$ - [F,L]
+</IfModule>
+
+# Compression
+<IfModule mod_deflate.c>
+    AddOutputFilterByType DEFLATE text/html text/css application/javascript application/json
+</IfModule>
+
+# Cache static assets
+<IfModule mod_expires.c>
+    ExpiresActive On
+    ExpiresByType image/jpeg "access plus 1 month"
+    ExpiresByType image/png "access plus 1 month"
+    ExpiresByType image/gif "access plus 1 month"
+    ExpiresByType image/webp "access plus 1 month"
+    ExpiresByType text/css "access plus 1 week"
+    ExpiresByType application/javascript "access plus 1 week"
+</IfModule>

@@ -1,0 +1,58 @@
+version: '3.8'
+
+services:
+  web:
+    build: .
+    ports:
+      - "8080:80"
+    volumes:
+      - .:/var/www/html
+      - uploads:/var/www/html/assets/uploads
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      - APP_URL=http://localhost:8080/
+      - DB_HOST=db
+      - DB_USER=hazina_asili
+      - DB_PASS=hazina_asili_secret
+      - DB_NAME=natural_compounds_db
+      - APP_ENV=development
+      - APP_DEBUG=true
+    restart: unless-stopped
+
+  db:
+    image: mysql:8.0
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: natural_compounds_db
+      MYSQL_USER: hazina_asili
+      MYSQL_PASSWORD: hazina_asili_secret
+    volumes:
+      - db_data:/var/lib/mysql
+      - ./database/natural_compounds_db.sql:/docker-entrypoint-initdb.d/01-schema.sql
+      - ./database/migration_v3_security.sql:/docker-entrypoint-initdb.d/02-migrations.sql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    restart: unless-stopped
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    ports:
+      - "8081:80"
+    environment:
+      PMA_HOST: db
+      PMA_USER: hazina_asili
+      PMA_PASSWORD: hazina_asili_secret
+    depends_on:
+      - db
+    restart: unless-stopped
+
+volumes:
+  db_data:
+  uploads:
