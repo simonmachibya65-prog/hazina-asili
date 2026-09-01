@@ -55,9 +55,9 @@ services:
       - key: LOGIN_LOCKOUT_MINUTES
         value: "15"
       - key: ADMIN_USERNAME
-        sync: false
+        value: "admin"
       - key: ADMIN_PASSWORD
-        sync: false
+        value: "faith@mabiki"
 
       # ----- AI Assistant (optional — uses Groq free tier) -----
       - key: AI_ENABLED

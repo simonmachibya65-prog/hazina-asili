@@ -256,10 +256,10 @@ SET FOREIGN_KEY_CHECKS = 1;
 -- SEED DATA
 -- ============================================================
 
--- Admin user (password: Admin@1234)
+-- Admin user (password: faith@mabiki)
 INSERT INTO `users` (`name`, `email`, `password`, `role`, `institution`, `created_at`) VALUES
-('System Admin', 'admin@hazina-asili.com', '$2y$12$LN1Rh.LjDDT9TuO5RhGwOeDQhMqx3bRwFMGFhJXXMfYs3MnCKMQWi', 'admin', 'HAZINA ASILI', NOW()),
-('Dr. Jane Smith', 'researcher@hazina-asili.com', '$2y$12$LN1Rh.LjDDT9TuO5RhGwOeDQhMqx3bRwFMGFhJXXMfYs3MnCKMQWi', 'researcher', 'University of Dar es Salaam', NOW());
+('System Admin', 'admin@hazina-asili.com', '$2y$12$/BVLLZyXBlWaLyJIKhbwz.we6VXS4R.SwFqll8GaWJbkA3NN9zBGa', 'admin', 'HAZINA ASILI', NOW()),
+('Dr. Jane Smith', 'researcher@hazina-asili.com', '$2y$12$/BVLLZyXBlWaLyJIKhbwz.we6VXS4R.SwFqll8GaWJbkA3NN9zBGa', 'researcher', 'University of Dar es Salaam', NOW());
 
 -- Organisms
 INSERT INTO `organisms` (`kingdom`, `phylum`, `class`, `scientific_name`) VALUES
